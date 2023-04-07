@@ -37,6 +37,7 @@ android {
 
 dependencies {
 
+    /*Core*/
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.8.0'
@@ -45,6 +46,13 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
+    /*Camera*/
     implementation 'com.github.jiangdongguo.AndroidUSBCamera:libausbc:3.3.3'
+
+    /*Graph*/
     implementation 'com.jjoe64:graphview:4.2.2'
+
+    /*MediaPipe*/
+    implementation 'com.google.mediapipe:solution-core:latest.release'
+    implementation 'com.google.mediapipe:facemesh:latest.release'
 }

@@ -83,8 +83,7 @@ class DemoFragment: CameraFragment() {
     }
     override fun getCameraRequest(): CameraRequest {
         return CameraRequest.Builder()
-            .setPreviewWidth(1300
-            ) // camera preview width
+            .setPreviewWidth(1300) // camera preview width
             .setPreviewHeight(1080) // camera preview height
             .setRenderMode(CameraRequest.RenderMode.OPENGL) // camera render mode
             .setDefaultRotateType(RotateType.ANGLE_0) // rotate camera image when opengl mode
