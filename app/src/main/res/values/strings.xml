@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">itec0401</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="permission_tip" translatable="false">You have already denied permission access. Go to the Settings page to turn on permissions</string>
+    <string name="dialog_contact_title" translatable="false">Contact me:</string>
+    <string name="dialog_contact_message" translatable="false">765067602@qq.com\n\n❤ version: %s</string>
+</resources>

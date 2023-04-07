@@ -1,59 +1,97 @@
 package com.example.itec0401
 
 import android.os.Bundle
+import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.itec0401.databinding.FragmentDemoBinding
+import com.jiangdg.ausbc.MultiCameraClient
+import com.jiangdg.ausbc.base.CameraFragment
+import com.jiangdg.ausbc.callback.ICameraStateCallBack
+import com.jiangdg.ausbc.camera.bean.CameraRequest
+import com.jiangdg.ausbc.render.env.RotateType
+import com.jiangdg.ausbc.utils.ToastUtils
+import com.jiangdg.ausbc.utils.bus.BusKey
+import com.jiangdg.ausbc.utils.bus.EventBus
+import com.jiangdg.ausbc.widget.AspectRatioTextureView
+import com.jiangdg.ausbc.widget.IAspectRatio
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+class DemoFragment: CameraFragment() {
+    private var mViewBinding: FragmentDemoBinding? = null
 
-/**
- * A simple [Fragment] subclass.
- * Use the [DemoFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class DemoFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    override fun getRootView(inflater: LayoutInflater, container: ViewGroup?): View? {
+        if (mViewBinding == null) {
+            mViewBinding = FragmentDemoBinding.inflate(inflater, container, false)
+        }
+        return mViewBinding!!.root
+    }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    // if you want offscreen render
+    // please return null
+    override fun getCameraView(): IAspectRatio? {
+        return AspectRatioTextureView(requireContext())
+    }
+
+    // if you want offscreen render
+    // please return null, the same as getCameraView()
+    override fun getCameraViewContainer(): ViewGroup? {
+        return mViewBinding?.container
+    }
+
+    // camera open status callback
+    override fun onCameraState(self: MultiCameraClient.ICamera,
+                               code: ICameraStateCallBack.State,
+                               msg: String?) {
+        when (code) {
+            ICameraStateCallBack.State.OPENED -> handleCameraOpened()
+            ICameraStateCallBack.State.CLOSED -> handleCameraClosed()
+            ICameraStateCallBack.State.ERROR -> handleCameraError(msg)
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_demo, container, false)
+    private fun handleCameraError(msg: String?) {
+        //mViewBinding.uvcLogoIv.visibility = View.VISIBLE
+        mViewBinding!!.frameRateTv.visibility = View.GONE
+        ToastUtils.show("camera opened error: $msg")
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment DemoFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            DemoFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    private fun handleCameraClosed() {
+        mViewBinding!!.frameRateTv.visibility = View.GONE
+        ToastUtils.show("camera closed success")
+    }
+
+    private fun handleCameraOpened() {
+        mViewBinding!!.frameRateTv.visibility = View.VISIBLE
+        ToastUtils.show("camera opened success")
+    }
+
+    override fun getGravity(): Int = Gravity.TOP
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initView()
+        initData()
+    }
+
+    override fun initData() {
+        super.initData()
+        EventBus.with<Int>(BusKey.KEY_FRAME_RATE).observe(this, {
+            mViewBinding!!.frameRateTv.text = "frame rate:  $it fps"
+        })
+    }
+    override fun getCameraRequest(): CameraRequest {
+        return CameraRequest.Builder()
+            .setPreviewWidth(1300
+            ) // camera preview width
+            .setPreviewHeight(1080) // camera preview height
+            .setRenderMode(CameraRequest.RenderMode.OPENGL) // camera render mode
+            .setDefaultRotateType(RotateType.ANGLE_0) // rotate camera image when opengl mode
+            .setAudioSource(CameraRequest.AudioSource.SOURCE_AUTO) // set audio source
+            .setAspectRatioShow(true) // aspect render,default is true
+            .setCaptureRawImage(false) // capture raw image picture when opengl mode
+            .setRawPreviewData(false)  // preview raw image when opengl mode
+            .create()
     }
 }
