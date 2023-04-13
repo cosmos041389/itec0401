@@ -6,8 +6,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <!--진형-->
-    <Button
-        android:id="@+id/watchCheckBtn"
+    <!--Button
+        android:id="@+id/confirmWatchConnectionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -15,10 +15,10 @@
         android:background="@color/GRAY"
         android:text="Check"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" /-->
 
     <!--진형-->
-    <TextView
+    <!--TextView
         android:id="@+id/watchCheckTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -27,7 +27,48 @@
         android:background="@color/GRAY"
         android:text="Connection"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/watchCheckBtn" />
+        app:layout_constraintTop_toBottomOf="@+id/watchCheckBtn" /-->
+
+
+    <!-- ADD StartButton-->
+    <androidx.cardview.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/start_btn"
+        android:layout_gravity="top|center"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="5dp"
+        card_view:cardCornerRadius="4dp">
+
+        <TextView
+            android:id="@+id/start"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="    확인"
+            android:textSize="25dp"/>
+    </androidx.cardview.widget.CardView>
+    <!-- StartButton End-->
+
+
+    <!-- Add CheckButton-->
+    <androidx.cardview.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/check_btn"
+        android:layout_gravity="top|right"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="5dp"
+        card_view:cardCornerRadius="4dp">
+
+        <TextView
+            android:id="@+id/check"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="    체크"
+            android:textSize="25dp"/>
+    </androidx.cardview.widget.CardView>
+    <!-- CheckButton Code End -->
+
 
     <FrameLayout
         android:id="@+id/fragment_container"
