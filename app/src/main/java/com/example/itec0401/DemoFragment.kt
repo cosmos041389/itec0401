@@ -34,8 +34,8 @@ class DemoFragment: CameraFragment(), CoroutineScope by MainScope(){
     private var wearableDeviceConnected: Boolean = false
 
     /* xml 레이아웃 파일에 Access 할 수 있게 함 */
-    private var _binding: FragmentDemoBinding? = null
-    private val binding get() = _binding!!
+    //private var _binding: FragmentDemoBinding? = null
+    private val binding get() = mViewBinding!!
 
     private val wearableAppCheckPayload = "AppOpenWearable"
     private val wearableAppCheckPayloadReturnACK = "AppOpenWearableACK"
@@ -94,16 +94,8 @@ class DemoFragment: CameraFragment(), CoroutineScope by MainScope(){
 
     override fun getGravity(): Int = Gravity.TOP
 
-    /* ADD CreateView*/
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View? {
-        // Inflate the layout for this fragment
-        _binding = FragmentDemoBinding.inflate(layoutInflater, container, false)
-        return binding.root
-    }
+
+
     @SuppressLint("SuspiciousIndentation")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -278,7 +270,7 @@ class DemoFragment: CameraFragment(), CoroutineScope by MainScope(){
     /* ADD onDestroyView */
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null
+        //_binding = null
     }
     override fun initData() {
         super.initData()
