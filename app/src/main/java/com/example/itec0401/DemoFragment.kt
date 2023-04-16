@@ -12,6 +12,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.itec0401.databinding.FragmentDemoBinding
@@ -289,5 +290,9 @@ class DemoFragment: CameraFragment(), CoroutineScope by MainScope(){
             .setCaptureRawImage(false) // capture raw image picture when opengl mode
             .setRawPreviewData(false)  // preview raw image when opengl mode
             .create()
+    }
+
+    fun setVisibility(){
+        mViewBinding?.container?.visibility = View.INVISIBLE
     }
 }
